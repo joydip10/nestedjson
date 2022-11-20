@@ -19,6 +19,7 @@ const Home = () => {
   const capitalizeFirst = (styleString) => {
     return styleString.charAt(0).toUpperCase() + styleString.slice(1);
   };
+  //helper function- to return element according to type
   const getElements = (type, properties, classname) => {
     let Element = elements[capitalizeFirst(type)];
     return <Element properties={properties} classname={classname} />;
@@ -38,17 +39,19 @@ const Home = () => {
     } else {
       if (datum?.form) {
         return getElements("Form", datum?.form, classnameReferences[datum?.id]);
-      } else {
+      } else if (!datum?.form) {
         return getElements(datum?.type, datum, classnameReferences[datum?.id]);
-      }
+      } else return;
     }
   };
+
   //----------------------- Function ends here-------------
 
   if (data) {
     return (
       <>
         <Helmet>
+          {/* Style string came in obj  */}
           <style>{styleString.join("")}</style>
         </Helmet>
         {renderElements(data, elements, classnameReferences).map((el) => el)}
